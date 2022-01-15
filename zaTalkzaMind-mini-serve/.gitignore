@@ -1,0 +1,13 @@
+# Editor directories and files
+.DS_Store
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.vscode
+.code-workspace
+
+# Dependency directories
+node_modules
+
