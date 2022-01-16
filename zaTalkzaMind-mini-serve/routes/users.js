@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-
+const User = require('../db/user-db')
 router.prefix('/users')
 
 router.get('/', function (ctx, next) {
@@ -9,5 +9,6 @@ router.get('/', function (ctx, next) {
 router.get('/bar', function (ctx, next) {
   ctx.body = 'this is a users/bar response'
 })
+
 
 module.exports = router
