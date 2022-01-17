@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
-  openId: String,
+  openid: String,
   nickName: String,
-  age: Number,
+  // age: Number,
   city: String,
   province: String,
   country: String,
   language: String,
   gender: String,
-  watermark: Object,
+  // watermark: Object,
   date: { type: Date, default: Date.now }, // 指定默认值
   avatarUrl: String
 });
