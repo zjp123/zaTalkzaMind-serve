@@ -5,9 +5,10 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-
+const config = require('./config')
 const index = require('./routes/index')
 const users = require('./routes/users')
+const jwt = require("jsonwebtoken");
 
 const db = require('./db/conect-mongo')
 // error handler
@@ -38,6 +39,31 @@ app.use(async (ctx, next) => {
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+
+app.use(async(ctx, next) => {
+  if (ctx.url.indexOf('login') > -1 || ctx.url.indexOf('decryptUser') > -1) { // 如果是登陆和解密敏感数据
+    await next(); // 如果是login和decryptUser 不验证
+  } else {
+    let tokenObj = null;
+    console.log(ctx.request.header, 'heahdhdhhdhdhdhdh');
+    // console.log(app.context.openid, app.context.session_key, '之前保存的token');
+    try {
+      tokenObj = jwt.verify(ctx.request.header['authorization'].split(' ')[1], config.jwt_secret);
+      console.log(tokenObj, tokenObj.data.openid, '解析后的token');
+      app.context.openid = tokenObj.data.openid
+    } catch (error) {
+      // logsUtil.logError(ctx, error, Date.now());
+      console.log('token 过期请重新登录');
+      ctx.body = {
+        code: 403,
+        success: false,
+        message: 'token 过期请重新登录'
+      };
+    }
+    await next(); 
+
+  }
+});
 
 // routes
 app.use(index.routes(), index.allowedMethods())
