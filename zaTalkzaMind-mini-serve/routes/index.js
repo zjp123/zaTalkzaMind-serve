@@ -12,7 +12,13 @@ router.get('/', async (ctx, next) => {
 
 router.get('/string', async (ctx, next) => {
   console.log('hahhahah');
-  ctx.body = 'koa2 string'
+  // ctx.body = 'koa2 string'
+  ctx.body = {
+    code: 200,
+    success: true,
+    message: 'ok',
+    data: 'hahhahah'
+  }
 })
 
 router.get('/json', async (ctx, next) => {
