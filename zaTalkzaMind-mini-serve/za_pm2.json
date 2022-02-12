@@ -1,0 +1,27 @@
+{
+    "apps" : [
+        {
+            "name": "zaTalkZaMind",
+            "script": "./app.js",
+            "env": {
+                "COMMON_VARIABLE": "true"
+            },
+            "env_production": {
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    "deploy": {
+        "production": {
+            "user": "zjp",
+            "host": ["47.117.115.206"],
+            "ref": "origin/master",
+            "repo": "git@github.com:zjp123/zaTalkzaMind-serve.git",
+            "path": "/home/zjp/www/zaTalkzaMind/production",
+            "ssh_options": "StrictHostKeyChecking=no",
+            "env": {
+                "NODE_ENV": "production"
+            }
+        }
+    }
+}
